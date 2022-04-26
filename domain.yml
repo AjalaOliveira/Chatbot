@@ -1,0 +1,75 @@
+version: '3.1'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
+intents:
+- greet
+- deny
+- goodbye
+- affirm
+- bot_challenge
+
+forms:
+  name_form:
+    required_slots:
+      - first_name
+      - last_name
+
+slots:
+  first_name:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+         - active_loop: name_form
+           requested_slot: first_name
+  last_name:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+         - active_loop: name_form
+           requested_slot: last_name
+
+responses:
+  utter_greet:
+  - text: Hey! I'm a bot developed by DBLab Team!
+  - text: Hello! I'm a bot developed by DBLab Team!
+  - text: Hello there! I'm a bot developed by DBLab Team!
+
+  utter_goodbye:
+  - text: Bye {first_name}!
+  - text: Okay {first_name}, see you later!
+  - text: Right {first_name}, god bye!
+
+  utter_iamabot:
+  - text: I'm a bot developed by DBLab Team
+
+  utter_ask_first_name:
+  - text: What is your first name?
+  - text: Please, let me know your first name?
+
+  utter_ask_last_name:
+  - text: Nice to meet you {first_name}! What is your last name?
+  - text: Great {first_name}! What is your last name?
+  - text: Okay {first_name}! What is your last name?
+  - text: Right {first_name}! Let me know your last name?
+  - text: Thanks {first_name}! Now let me know your last name?
+  - text: Please {first_name}, now type your last name?
+
+  utter_submit:
+  - text: Ok. Thanks!
+
+  utter_start_conversation:
+  - text: So {first_name}... let me know how can I help you.
+  - text: Right {first_name}, how can I help you?
+  - text: Let's go ahead {first_name}, what do you want to know?
+
+actions:
+- utter_greet
+- utter_start_conversation
+- utter_submit
+- validate_name_form
